@@ -176,7 +176,7 @@ The project is safe to deploy in either staging or production Firebase environme
 
 🧑‍💻 Author
 
-[Your Name]
+Tenzin Chokdup
 Built during my internship as a backend integration project combining Firebase, Webflow, and Memberstack.
 Now maintained independently for educational and portfolio purposes.
 
