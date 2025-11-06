@@ -88,21 +88,26 @@ APP_ENV=development
 DB_REGION=us-central1
 MEMBERSTACK_API_KEY=your_memberstack_api_key_here
 ```
-🧩 Local Development
-1️⃣ Install Dependencies
+## 🧩 Local Development
+
+### 1️⃣ Install Dependencies
+
 ```npm install```
 
-2️⃣ Run Locally (with Firebase Emulator)
+### 2️⃣ Run Locally (with Firebase Emulator)
+
 ```firebase emulators:start```
 
 
-The API will be available at:
+***The API will be available at:***
 
 ```http://localhost:5001/<your-project-id>/<region>/api```
 
-3️⃣ Test Example
+### 3️⃣ Test Example
+
 ```curl http://localhost:5001/<your-project-id>/<region>/api/directory?collection=mentees```
 
+```
 .
 ├── functions/
 │   ├── index.js          # Main Express + Firebase Cloud Functions entry
@@ -110,6 +115,7 @@ The API will be available at:
 │   ├── .env.example
 │   └── ...
 ├── README.md
+```
 
 ***📝 Note:***
 This repository contains only the Firebase Cloud Functions source (functions/ directory).
