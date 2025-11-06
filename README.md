@@ -1,17 +1,25 @@
-🔥 Firebase + Webflow + Memberstack API Integration
+🚀 Firebase + Webflow + Memberstack API Integration
 
 This project is an Express-based Firebase Cloud Function API built to manage and sync user profiles across Firestore, Webflow CMS, and Memberstack.
 
-It provides routes for querying and filtering users (/directory), updating user profiles (/users/:id), handling Webflow webhooks (/webflow-webhook), and syncing updates to Memberstack (/memberstack/:id/update).
+It includes endpoints for:
 
-💡 This project was developed during my internship, and I was permitted to keep a copy for my personal learning and portfolio. All sensitive credentials and organization-specific data have been removed.
+Querying and filtering users (/directory)
 
-🚀 Features
+Updating user profiles (/users/:id)
+
+Handling Webflow webhooks (/webflow-webhook)
+
+Syncing updates to Memberstack (/memberstack/:id/update)
+
+💡 This project was developed during my internship, and I was permitted to keep a copy for learning and portfolio purposes. All sensitive credentials and organization-specific data have been removed.
+
+✨ Features
 🔹 1. Directory Search API
 
 Endpoint: GET /directory
 
-Filters mentees, mentors, or volunteers by:
+Filter mentees, mentors, or volunteers by:
 
 Skills
 
@@ -33,7 +41,7 @@ Public/private profiles
 
 Free-text search (name, industry, or skills)
 
-Fills missing fields with "Not specified" for consistent client-side rendering.
+Automatically fills missing fields with "Not specified" for consistent client-side rendering.
 
 🔹 2. User Profile Update API
 
@@ -41,23 +49,23 @@ Endpoint: PUT /users/:id
 
 Allows users to update their own profiles.
 
-Validates and sanitizes inputs (trims strings, converts URLs, ensures arrays for skills).
+Validates and sanitizes inputs (trims strings, ensures arrays for skills, normalizes URLs).
 
-Automatically calculates a profile completeness score based on required fields.
+Calculates a profile completeness score based on required fields.
 
-Updates the user record in Firestore under the correct collection (mentees or mentors).
+Updates user records in Firestore under the correct collection (mentees or mentors).
 
 🔹 3. Webflow Webhook Sync
 
 Endpoint: POST /webflow-webhook
 
-Receives updates from Webflow CMS (e.g., form submissions).
+Receives form data from Webflow CMS.
 
-Maps Webflow fields (like “Preferred pronouns”, “Job title”, etc.) to Firestore schema.
+Maps Webflow fields (e.g. “Preferred pronouns”, “Job title”) to Firestore schema.
 
-Handles “Not specified” and missing values gracefully.
+Handles "Not specified" values gracefully.
 
-Updates the corresponding user document in Firestore.
+Updates corresponding Firestore user documents.
 
 🔹 4. Memberstack Update Sync
 
@@ -65,9 +73,9 @@ Endpoint: POST /memberstack/:id/update
 
 Updates Memberstack members via their REST API (PATCH /v2/members/:id).
 
-Syncs returned data with Firestore under the members collection.
+Syncs returned data to Firestore (members collection).
 
-Uses MEMBERSTACK_API_KEY for authenticated updates.
+Uses MEMBERSTACK_API_KEY for authentication.
 
 🧠 Architecture Overview
 Client (Webflow / Dashboard)
@@ -87,33 +95,30 @@ Middleware: cors, express.json()
 
 HTTP Client: axios
 
-🧩 Environment Variables
+⚙️ Environment Variables
 
-Create a .env file in your project root with the following:
+Create a .env file in your functions/ directory:
 
 APP_ENV=development
 DB_REGION=us-central1
 MEMBERSTACK_API_KEY=your_memberstack_api_key_here
 
 
-⚠️ Never commit your .env file to GitHub. Use .gitignore to exclude it.
+⚠️ Never commit your .env file to GitHub — make sure it’s listed in .gitignore.
 
-🛠️ Local Development
-1️⃣ Install dependencies
+🧩 Local Development
+1️⃣ Install Dependencies
 npm install
 
-2️⃣ Run locally
+2️⃣ Run Locally (with Firebase Emulator)
 firebase emulators:start
 
 
-This will start the local Firebase emulator with your Express app accessible at:
+The API will be available at:
 
 http://localhost:5001/<your-project-id>/<region>/api
 
-3️⃣ Test endpoints
-
-Use a REST client like Postman or curl, for example:
-
+3️⃣ Test Example
 curl http://localhost:5001/<your-project-id>/<region>/api/directory?collection=mentees
 
 📂 Project Structure
@@ -124,11 +129,23 @@ curl http://localhost:5001/<your-project-id>/<region>/api/directory?collection=m
 │   ├── .env.example
 │   └── ...
 ├── README.md
-└── firebase.json
+
+
+📝 Note:
+This repository contains only the Firebase Cloud Functions source (functions/ directory).
+The parent Firebase configuration files (firebase.json, .firebaserc) were part of the organization’s internal setup and are not included here.
+
+If you want to make the repo deployable yourself, you can add a minimal firebase.json:
+
+{
+  "functions": {
+    "source": "functions"
+  }
+}
 
 📈 Profile Completeness Logic
 
-Each user profile is assigned a completeness percentage based on required fields:
+Each user profile includes a completeness percentage, based on the presence of key fields:
 
 const requiredFields = [
   "pronouns", "location", "linkedinUrl", "resumeUrl",
@@ -137,12 +154,12 @@ const requiredFields = [
 ];
 
 
-Completeness is calculated as:
+Calculation:
 
 (filled_fields / total_fields) * 100
 
-🧾 Example API Response
-GET /directory
+🧾 Example API Responses
+✅ GET /directory
 [
   {
     "id": "abc123",
@@ -156,7 +173,7 @@ GET /directory
   }
 ]
 
-PUT /users/:id
+✅ PUT /users/:id
 {
   "message": "✅ User abc123 updated successfully in mentees",
   "profile": {
@@ -168,13 +185,13 @@ PUT /users/:id
 
 💡 Notes
 
-All updates are idempotent — repeated updates with the same data won’t duplicate or corrupt records.
+All updates are idempotent — repeated updates with the same data don’t cause duplicates.
 
-Missing or "Not specified" values are automatically converted to null for clean Firestore records.
+"Not specified" and empty values are automatically converted to null for clean Firestore records.
 
-The project is safe to deploy in either staging or production Firebase environments.
+Safe for both staging and production Firebase environments.
 
-🧑‍💻 Author
+👨‍💻 Author
 
 Tenzin Chokdup
 Built during my internship as a backend integration project combining Firebase, Webflow, and Memberstack.
