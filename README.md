@@ -1,4 +1,4 @@
-🚀 Firebase + Webflow + Memberstack API Integration
+#🚀 Firebase + Webflow + Memberstack API Integration
 
 This project is an Express-based Firebase Cloud Function API built to manage and sync user profiles across Firestore, Webflow CMS, and Memberstack.
 
@@ -14,8 +14,8 @@ Syncing updates to Memberstack (/memberstack/:id/update)
 
 💡 This project was developed during my internship, and I was permitted to keep a copy for learning and portfolio purposes. All sensitive credentials and organization-specific data have been removed.
 
-✨ Features
-🔹 1. Directory Search API
+#✨ Features
+##🔹 1. Directory Search API
 
 Endpoint: GET /directory
 
